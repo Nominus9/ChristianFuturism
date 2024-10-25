@@ -1,0 +1,17 @@
+{
+  "name": "christianfuturism",
+  "version": "1.0.0",
+  "description": "Web Page for Christian Futurism organization.",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "God",
+    "Jesus",
+    "Holy",
+    "Spirit"
+  ],
+  "author": "Nominus9",
+  "license": "MIT"
+}
