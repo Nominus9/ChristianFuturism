@@ -1,0 +1,39 @@
+/* style.css */
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  overflow-y: auto;
+  background: transparent;
+}
+
+#glCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+main {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+}
+
+/* Just these tesseract styles */
+.tesseract-container-center {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.tesseract-animation {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.tesseract-animation:hover {
+  filter: drop-shadow(0 0 10px rgba(0, 255, 0, 0.2));
+}
