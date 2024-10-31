@@ -1,9 +1,11 @@
 // hypercube.js
 export class HypercubeGeometry {
-  // hypercube.js
+  // Keep constructor same as before...
+
   constructor() {
-    // Increase initial scale
-    const scale = 50; // Try bigger number here
+    const scale = 25;
+    this.isHovered = false;
+    // Initialize vertices4D right here in constructor
     this.vertices4D = [
       [-1, -1, -1, -1],
       [1, -1, -1, -1],
@@ -22,78 +24,126 @@ export class HypercubeGeometry {
       [-1, 1, 1, 1],
       [1, 1, 1, 1],
     ].map((v) => v.map((coord) => coord * scale));
+    this.transitionProgress = 0;
+    this.state = "rotating"; // 'rotating', 'transitioning', 'cruciform'
+    console.log("Initialized vertices:", this.vertices4D); // Debug
   }
 
-  // hypercube.js
+  setHovered(value) {
+    this.isHovered = value;
+    if (value) {
+      this.state = "transitioning";
+      this.transitionProgress = 0;
+    } else {
+      this.state = "rotating";
+    }
+  }
+
   rotate4D(angle1, angle2, angle3) {
-    const time = Date.now() / 2000; // Slower base time
+    const time = Date.now() / 2000; // Slower rotation
 
-    // Even gentler rotations
-    angle1 = Math.sin(time * 0.2) * 0.3; // XY rotation
-    angle2 = Math.cos(time * 0.15) * 0.2; // XZ rotation
-    angle3 = Math.sin(time * 0.1) * 0.1; // XW rotation - very gentle
-
-    const cos1 = Math.cos(angle1);
-    const sin1 = Math.sin(angle1);
-    const cos2 = Math.cos(angle2);
-    const sin2 = Math.sin(angle2);
-    const cos3 = Math.cos(angle3);
-    const sin3 = Math.sin(angle3);
-
-    let rotated = [...this.vertices4D];
-
-    // More controlled rotations using sine waves
-    rotated = rotated.map((vertex) => {
+    // Simple rotation
+    return this.vertices4D.map((vertex) => {
       const [x, y, z, w] = vertex;
 
-      // Combined smoother rotation
-      const newX = x * cos1 * cos2 - y * sin1;
-      const newY = x * sin1 + y * cos1;
-      const newZ = z * cos2 + x * sin2 * 0.5;
-      const newW = w * cos3 + x * sin3 * 0.2;
+      // Just do a simple XY rotation for now
+      const angle = time;
+      const rotX = x * Math.cos(angle) - y * Math.sin(angle);
+      const rotY = x * Math.sin(angle) + y * Math.cos(angle);
 
-      return [newX, newY, newZ, newW];
+      return [rotX, rotY, z, w];
     });
-
-    return rotated;
   }
 
   project4Dto2D(vertices4D) {
-    console.log(
-      "Edges being drawn:",
-      this.getEdges(this.project4Dto2D(vertices4D))
-    );
+    const center = [150, 150];
 
-    const distance4D = 30;
-    const distance3D = 50;
-    const center = [100, 100];
-    const projectionScale = 5; // Increased scale
+    return vertices4D.map((vertex) => {
+      const [x, y, z, w] = vertex;
+
+      // Simple projection - just use x and y for now
+      return [x + center[0], y + center[1]];
+    });
+  }
+  /*
+  project4Dto2D(vertices4D) {
+    const center = [150, 150];
+    const distance3D = 200;
+    const distance4D = 300;
+
+    // Smooth transition progress
+    if (this.state === "transitioning") {
+      this.transitionProgress += 0.02; // Adjust for speed
+      if (this.transitionProgress >= 1) {
+        this.state = "cruciform";
+      }
+    }
+
+    return vertices4D.map((vertex) => {
+      let [x, y, z, w] = vertex;
+
+      if (this.state !== "rotating") {
+        // Interpolate between current position and cruciform
+        const progress = Math.min(1, this.transitionProgress);
+        const cruciformX = x * (1 + Math.abs(w) * 0.5);
+        const cruciformY = w * 50;
+
+        x = x * (1 - progress) + cruciformX * progress;
+        y = y * (1 - progress) + cruciformY * progress;
+      }
+
+      // Regular projection code...
+      const w_factor = 1 / Math.max(1, distance4D - w);
+      x *= w_factor;
+      y *= w_factor;
+      z *= w_factor;
+
+      const z_factor = 1 / (1 - z / distance3D);
+      return [x * z_factor + center[0], y * z_factor + center[1]];
+    });
+  }
+  
+  project4Dto2D(vertices4D) {
+    const center = [150, 150];
+    const distance3D = 200;
+    const distance4D = 300;
+
+    console.log("Incoming vertices4D:", vertices4D); // Check input
 
     const projected = vertices4D.map((vertex) => {
-      // ... existing projection code ...
-      const final = [
-        proj3D[0] * z * 2 + center[0],
-        proj3D[1] * z * 2 + center[1],
-      ];
-      console.log(`Vertex projected to: ${final}`);
-      return final;
+      let [x, y, z, w] = vertex;
+
+      console.log("Processing vertex:", { x, y, z, w }); // Check each vertex
+
+      const w_factor = 1 / Math.max(1, distance4D - w);
+      const projectedX = x * w_factor;
+      const projectedY = y * w_factor;
+      const projectedZ = z * w_factor;
+
+      console.log("After w projection:", {
+        x: projectedX,
+        y: projectedY,
+        z: projectedZ,
+      });
+
+      const z_factor = 1 / Math.max(1, distance3D - projectedZ);
+      const finalX = projectedX * z_factor + center[0];
+      const finalY = projectedY * z_factor + center[1];
+
+      console.log("Final position:", { x: finalX, y: finalY });
+
+      return [finalX, finalY];
     });
 
+    console.log("Final projected points:", projected);
     return projected;
   }
+    */
 
-  // Helper: Matrix multiplication
-  multiplyMatrixVector(matrix, vector) {
-    return matrix.map((row) =>
-      row.reduce((sum, value, i) => sum + value * vector[i], 0)
-    );
-  }
-
-  // Get edges connecting vertices
   getEdges(vertices2D) {
-    // Define edges of the hypercube
-    const edges = [
-      // Edges of the inner cube
+    // Define edges for full hypercube structure
+    const edgeIndices = [
+      // Inner cube
       [0, 1],
       [1, 3],
       [3, 2],
@@ -106,7 +156,8 @@ export class HypercubeGeometry {
       [1, 5],
       [2, 6],
       [3, 7],
-      // Edges to the outer cube
+
+      // Outer cube
       [8, 9],
       [9, 11],
       [11, 10],
@@ -119,7 +170,8 @@ export class HypercubeGeometry {
       [9, 13],
       [10, 14],
       [11, 15],
-      // Edges connecting the cubes
+
+      // Connections between cubes
       [0, 8],
       [1, 9],
       [2, 10],
@@ -130,7 +182,7 @@ export class HypercubeGeometry {
       [7, 15],
     ];
 
-    return edges.map(([i, j]) => ({
+    return edgeIndices.map(([i, j]) => ({
       x1: vertices2D[i][0],
       y1: vertices2D[i][1],
       x2: vertices2D[j][0],
