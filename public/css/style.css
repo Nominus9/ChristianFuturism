@@ -350,3 +350,146 @@ main {
     transform: translateY(50%) rotate(45deg);
   }
 }
+
+.scripture-window {
+  box-shadow: 0 0 30px rgba(0, 255, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.scripture-window:hover {
+  box-shadow: 0 0 40px rgba(0, 255, 0, 0.1);
+}
+
+.verse-text {
+  background: linear-gradient(90deg, #000, #333);
+  -webkit-background-clip: text;
+  background-clip: text;
+  animation: text-shimmer 3s infinite;
+}
+
+@keyframes text-shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes scan {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.animate-scan {
+  animation: scan 3s linear infinite;
+}
+
+.citation-link.active {
+  color: black;
+}
+
+.citation-link.active::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2px;
+  height: 100%;
+  background: #4ade80;
+  opacity: 1;
+}
+
+@media (max-width: 1024px) {
+  .citations-nav {
+    display: none;
+  }
+}
+
+/* Footnotes */
+.footnote-link {
+  color: #4ade80;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.footnote-link:hover {
+  color: #22c55e;
+}
+
+/* Footnote tooltip */
+.footnote-tooltip {
+  position: fixed;
+  background: white;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  max-width: 20rem;
+  z-index: 50;
+  backdrop-filter: blur(8px);
+}
+
+/* Section transitions */
+.principle-section {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s forwards;
+  animation-delay: calc(var(--section-index) * 0.1s);
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Conceptual shader modification */
+const manifestoShader = {
+  uniforms: {
+    ...existingUniforms,
+    // Add semantic influence on the visualization
+    principleWeights: { value: new Float32Array(7) }, // One per principle
+    scrollProgress: { value: 0.0 },
+    frameInvariance: { value: 0.0 } // Your scientific perspective
+  },
+  vertexShader: `
+    // Existing vertex shader
+    // Add modulation based on principle weights
+  `,
+  fragmentShader: `
+    // Modify the existing effect to show relationships
+    // Between theological and scientific frames
+  `
+};
+
+@keyframes draw {
+  from {
+    stroke-dashoffset: 1000;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-draw {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: draw 3s ease-in-out forwards;
+}
+
+@keyframes gentle-pulse {
+  0% { opacity: 0.02; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.04; transform: translate(-50%, -50%) scale(1.02); }
+  100% { opacity: 0.02; transform: translate(-50%, -50%) scale(1); }
+}
+
+.animate-gentle-pulse {
+  animation: gentle-pulse 8s ease-in-out infinite;
+}
