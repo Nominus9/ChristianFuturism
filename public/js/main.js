@@ -53,6 +53,15 @@ function main() {
   const u_timeLocation = gl.getUniformLocation(program, "u_time");
   const u_resolutionLocation = gl.getUniformLocation(program, "u_resolution");
 
+  const u_hypercubePosLocation = gl.getUniformLocation(
+    program,
+    "u_hypercubePos"
+  );
+  const u_hypercubeInfluenceLocation = gl.getUniformLocation(
+    program,
+    "u_hypercubeInfluence"
+  );
+
   function render(time) {
     time *= 0.001; // Convert to seconds
 
@@ -67,6 +76,24 @@ function main() {
 
     gl.uniform1f(u_timeLocation, time);
     gl.uniform2f(u_resolutionLocation, gl.canvas.width, gl.canvas.height);
+
+    let hypercubePos = [0.5, 0.5];
+    let hypercubeInfluence = 0.0;
+
+    const hypercubeElement = document.querySelector(
+      ".tesseract-container-center"
+    );
+    if (hypercubeElement) {
+      const rect = hypercubeElement.getBoundingClientRect();
+      hypercubePos = [
+        (rect.left + rect.width / 2) / window.innerWidth,
+        1.0 - (rect.top + rect.height / 2) / window.innerHeight,
+      ];
+      hypercubeInfluence = 0.3 + Math.sin(time * 0.5) * 0.1;
+    }
+
+    gl.uniform2f(u_hypercubePosLocation, hypercubePos[0], hypercubePos[1]);
+    gl.uniform1f(u_hypercubeInfluenceLocation, hypercubeInfluence);
 
     gl.drawArrays(gl.TRIANGLES, 0, 6);
 

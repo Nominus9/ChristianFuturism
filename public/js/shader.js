@@ -10,31 +10,35 @@ const fragmentShaderSource = `
             uniform float u_time;
             uniform vec2 u_resolution;
             uniform vec2 u_mouse;
+            uniform vec2 u_hypercubePos;
+            uniform float u_hypercubeInfluence;
 
             void main() {
                 vec2 uv = gl_FragCoord.xy / u_resolution;
 
-                // New center for the glow effect, resembling the sun
-                vec2 center = vec2(0.777, 0.888) + (u_mouse - vec2(0.5)) * 0.02; // Slight movement with mouse
+                // Original sun/halo effect
+                vec2 center = vec2(0.777, 0.888) + (u_mouse - vec2(0.5)) * 0.02;
                 float dist = distance(uv, center);
 
-                // Create a larger, more subtle bloom effect for a faint outward glow
-                float bloomIntensity = pow(dist, -1.0) * 1.2; // Inverse distance for outward glow, enhanced intensity
-
-                // Very subtle rippling effect to add dynamic movement
+                // Hypercube influence
+                float hypercubeDist = distance(uv, u_hypercubePos);
+                float hypercubeGlow = (1.0 - smoothstep(0.0, 0.3, hypercubeDist)) * u_hypercubeInfluence;
+                
+                // Combine effects
+                float bloomIntensity = pow(dist, -1.0) * 1.2;
                 float ripple = sin(u_time * 0.1 + dist * 4.0) * 0.01;
                 bloomIntensity += ripple;
 
-                // Enhanced iridescence for a gentle golden glow, directed outward
                 float iridescence = sin(u_time * 0.05 + dist * 8.0) * 0.02 + 0.98;
-
-                // Color calculations for the golden light
-                vec3 haloColor = vec3(1.0, 0.9, 0.5) * bloomIntensity * iridescence; // Softer golden light
-
-                // Add faint color variation for subtle iridescence
-                haloColor += vec3(0.05, 0.08, 0.1) * sin(u_time + dist * 10.0) * bloomIntensity * 0.05;
-
-                gl_FragColor = vec4(clamp(haloColor, 0.0, 1.0), 1.0);
+                
+                // Add hypercube glow to the final color
+                vec3 haloColor = vec3(1.0, 0.9, 0.5) * bloomIntensity * iridescence;
+                vec3 hypercubeColor = vec3(0.0, 1.0, 0.2) * hypercubeGlow;
+                
+                // Mix the colors
+                vec3 finalColor = mix(haloColor, hypercubeColor, hypercubeGlow * 0.7);
+                
+                gl_FragColor = vec4(clamp(finalColor, 0.0, 1.0), 1.0);
             }
         `;
 
