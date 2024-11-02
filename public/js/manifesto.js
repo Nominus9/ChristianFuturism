@@ -2,8 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const manifestoContent = document.getElementById("manifesto-content");
 
   const manifestoStructure = {
-    title: "CHRISTIAN FUTURISM:",
-    subtitle: "PRINCIPLES AND ARGUMENTS",
+    title: "PRINCIPLES AND ARGUMENTS",
     abstract: `This manifesto presents a theological and philosophical framework for integrating Christian 
       faith with emerging technologies, arguing for active participation in technological 
       development as a fulfillment of divine mandate.`,
@@ -84,20 +83,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   manifestoContent.innerHTML = `
     <div class="min-h-screen relative overflow-hidden">
-      <!-- Massive pulsing hands background -->
-      <div class="fixed inset-0 pointer-events-none">
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[200vw] h-[200vh]">
-          <img 
-            src="/assets/hands.png"
-            class="w-full h-full object-cover animate-super-gentle-pulse filter brightness-150 contrast-150" 
-            style="opacity: 0.085"
-            alt="" 
-          />
-        </div>
-      </div>
-
+      <!-- Shader should already be at z-index 0 -->
+      
       <!-- Main layout -->
-      <div class="flex justify-center relative z-10">
+      <div class="flex justify-center content-layer">
         <!-- ToC Sidebar -->
         <div class="w-72 hidden lg:block shrink-0">
           <div class="fixed h-screen p-8 overflow-y-auto">
@@ -136,14 +125,16 @@ document.addEventListener("DOMContentLoaded", () => {
         <!-- Main Content -->
         <main class="flex-1 px-4 md:px-8 py-16 lg:pl-80 lg:pr-16">
           <div class="max-w-3xl">
+            <!-- Fixed Header -->
+            <div class="fixed top-6 right-6 text-lg text-black/30 font-light tracking-wider">
+              Christian Futurism
+            </div>
+
             <!-- Header -->
-            <header class="mb-16 text-center lg:text-left">
-              <h1 class="text-4xl md:text-5xl mb-2 font-light tracking-wide">
+            <header class="mb-24 text-center lg:text-left relative pt-16">
+              <h1 class="text-4xl md:text-5xl mb-6 font-light tracking-wide">
                 ${manifestoStructure.title}
               </h1>
-              <h2 class="text-3xl md:text-4xl mb-6 font-light tracking-wide">
-                ${manifestoStructure.subtitle}
-              </h2>
               <div class="w-16 h-px bg-black/20 mb-6 mx-auto lg:mx-0"></div>
               <p class="text-lg text-black/70 max-w-2xl mx-auto lg:mx-0 italic">
                 ${manifestoStructure.abstract}
@@ -165,11 +156,9 @@ document.addEventListener("DOMContentLoaded", () => {
                   <p class="text-lg leading-relaxed">${section.content}</p>
                   ${
                     section.citations
-                      ? `
-                    <div class="mt-4 text-sm text-black/60">
-                      Citations: ${section.citations.join(", ")}
-                    </div>
-                  `
+                      ? `<div class="mt-4 text-sm text-black/60">
+                        Citations: ${section.citations.join(", ")}
+                      </div>`
                       : ""
                   }
                 </section>
@@ -180,10 +169,66 @@ document.addEventListener("DOMContentLoaded", () => {
           </div>
         </main>
       </div>
+
+      <!-- Mobile ToC Button -->
+      <button 
+        id="mobile-toc-toggle"
+        class="fixed bottom-6 right-6 z-50 lg:hidden bg-white/80 backdrop-blur-sm shadow-lg rounded-full p-4 hover:bg-white transition-colors duration-300"
+        aria-label="Toggle Table of Contents"
+      >
+        <svg class="w-6 h-6 text-black/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path d="M4 6h16M4 12h16M4 18h16" strokeWidth="2" strokeLinecap="round"/>
+        </svg>
+      </button>
+
+      <!-- Mobile ToC Overlay -->
+      <div id="mobile-toc" 
+        class="fixed inset-0 z-40 lg:hidden translate-x-full transition-transform duration-300 ease-in-out">
+        <div class="absolute inset-0 bg-black/20 backdrop-blur-sm" id="mobile-toc-backdrop"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-80 bg-white p-6 shadow-lg">
+          <nav class="space-y-6">
+            <!-- Same ToC content as desktop -->
+            ${manifestoStructure.sections
+              .map(
+                (section) => `
+              <a href="#${section.id}" 
+                class="block text-sm text-black/70 hover:text-black py-2 transition-colors duration-300">
+                ${
+                  section.type === "principle"
+                    ? `Principle ${section.number}: `
+                    : ""
+                }
+                ${section.title}
+              </a>
+            `
+              )
+              .join("")}
+          </nav>
+        </div>
+      </div>
     </div>
   `;
 
-  // Add intersection observer for ToC highlighting
+  // Mobile ToC functionality
+  const mobileToggle = document.getElementById("mobile-toc-toggle");
+  const mobileToc = document.getElementById("mobile-toc");
+  const mobileBackdrop = document.getElementById("mobile-toc-backdrop");
+
+  mobileToggle?.addEventListener("click", () => {
+    mobileToc?.classList.toggle("translate-x-full");
+  });
+
+  mobileBackdrop?.addEventListener("click", () => {
+    mobileToc?.classList.add("translate-x-full");
+  });
+
+  document.querySelectorAll("#mobile-toc a").forEach((link) => {
+    link.addEventListener("click", () => {
+      mobileToc?.classList.add("translate-x-full");
+    });
+  });
+
+  // ToC highlighting
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {

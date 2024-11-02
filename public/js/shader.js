@@ -9,28 +9,50 @@ const fragmentShaderSource = `
             precision highp float;
             uniform float u_time;
             uniform vec2 u_resolution;
-            uniform vec2 u_hypercubePos;
-            uniform float u_hypercubeInfluence;
+
+            // Grid helper function
+            float grid(vec2 uv, float size) {
+                vec2 grid = fract(uv * size);
+                float gridLines = step(0.98, grid.x) + step(0.98, grid.y);
+                return gridLines * 0.3; // Subtle grid intensity
+            }
+
+            // Wave function
+            float wave(vec2 uv, float time) {
+                // 30 second cycle
+                float slowTime = time * 0.033; 
+                float wave = sin(slowTime - (uv.x + uv.y) * 3.0) * 0.5 + 0.5;
+                return wave;
+            }
 
             void main() {
                 vec2 uv = gl_FragCoord.xy / u_resolution;
                 
-                // Slightly more active movement
-                float time = u_time * 0.3; // Slowed down from original
+                // Isometric transformation
+                mat2 iso = mat2(
+                    1.0, 0.5,  // First column
+                    -1.0, 0.5   // Second column
+                ) * 1.5;
+                vec2 isoUv = uv * iso;
                 
-                // Subtle flowing effect
+                // Base green color (#6ef4a5)
+                vec3 baseColor = vec3(0.431, 0.957, 0.647);
+                
+                // Time-based flow
+                float time = u_time * 0.3;
                 float flow = sin(uv.x * 4.0 + time) * 0.5 + 
-                            cos(uv.y * 3.0 - time * 0.7) * 0.5;
+                             cos(uv.y * 3.0 - time * 0.7) * 0.5;
                 
-                // More ethereal glow
-                vec3 color = vec3(
-                    0.97 + sin(flow * 0.2) * 0.03,  // Subtle red variation
-                    0.98 + cos(flow * 0.15) * 0.02,  // Subtle green variation
-                    0.99 + sin(flow * 0.1) * 0.01   // Very subtle blue variation
-                );
-
+                // Grid with wave effect
+                float gridWave = wave(isoUv, u_time);
+                float gridPattern = grid(isoUv, 20.0) * gridWave;
+                
+                // Combine effects
+                vec3 color = baseColor * (0.5 + 0.5 * sin(flow));
+                color += vec3(gridPattern) * baseColor; // Add grid to the glow
+                
                 // Gentle opacity pulsing
-                float alpha = 0.3 + sin(time * 0.2) * 0.05;
+                float alpha = 0.3 + 0.1 * sin(time);
                 
                 gl_FragColor = vec4(color, alpha);
             }
@@ -61,10 +83,22 @@ function createProgram(gl, vertexShader, fragmentShader) {
   return program;
 }
 
-function main() {
-  const canvas = document.getElementById("glCanvas");
-  const gl = canvas.getContext("webgl");
+document.addEventListener("DOMContentLoaded", () => {
+  const canvas = document.querySelector("#glCanvas");
+  if (!canvas) {
+    console.error("No canvas found!");
+    return;
+  }
 
+  // Set canvas size to window size
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCanvas();
+  window.addEventListener("resize", resizeCanvas);
+
+  const gl = canvas.getContext("webgl");
   if (!gl) {
     console.error("WebGL not supported");
     return;
@@ -128,6 +162,6 @@ function main() {
   }
 
   requestAnimationFrame(render);
-}
 
-main();
+  console.log("Shader initialized"); // Debug log
+});

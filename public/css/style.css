@@ -29,28 +29,37 @@ button {
   font-family: "Cormorant Garamond", serif;
 }
 
+/* Base layer - Shader */
 #glCanvas {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   z-index: -1;
+  opacity: 0.7;
+  pointer-events: none;
 }
 
-main {
+/* Middle layer - Hypercube */
+.tesseract-container-center {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  transform: scale(1.5);
+  transition: transform 0.5s ease-out;
+  mix-blend-mode: screen;
+}
+
+/* Top layer - Content */
+.content-layer {
   position: relative;
-  z-index: 1;
-  min-height: 100vh;
+  z-index: 10;
+  background: transparent;
 }
 
 /* Just these tesseract styles */
-.tesseract-container-center {
-  position: relative;
-  transition: all 0.3s ease;
-  opacity: 0.15;
-}
-
 .tesseract-animation {
   width: 100%;
   height: 100%;
@@ -492,4 +501,41 @@ const manifestoShader = {
 
 .animate-gentle-pulse {
   animation: gentle-pulse 8s ease-in-out infinite;
+}
+
+@keyframes super-gentle-pulse {
+  0% { 
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+  20% { 
+    opacity: 0.04;  /* Increased from 0.025 */
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+  50% { 
+    opacity: 0.05;  /* Peak opacity */
+    transform: translate(-50%, -50%) scale(1.12);
+  }
+  80% {
+    opacity: 0.04;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+  100% { 
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+}
+
+.animate-super-gentle-pulse {
+  animation: super-gentle-pulse 15s ease-in-out infinite;
+}
+
+/* Fade in the whole page gracefully */
+.page-fade-in {
+  animation: fadeIn 1s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

@@ -103,4 +103,14 @@ function main() {
   requestAnimationFrame(render);
 }
 
+function resizeCanvas() {
+  const canvas = document.getElementById("glCanvas");
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+// Add resize listener
+window.addEventListener("resize", resizeCanvas);
+window.addEventListener("load", resizeCanvas);
+
 main();

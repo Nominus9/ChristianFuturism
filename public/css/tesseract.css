@@ -1,0 +1,36 @@
+/* Tesseract container styling */
+.tesseract-container-center {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  transform: scale(1.5);
+  transition: transform 0.5s ease-out;
+  mix-blend-mode: screen;
+}
+
+/* SVG styling */
+.hypercube-render-group line {
+  transition: all 0.1s ease-out;
+  stroke: #6ef4a5; /* Our theme green */
+  stroke-width: 0.5;
+  opacity: 0.5;
+}
+
+/* Animation states */
+.tesseract-animation {
+  animation: rotate 20s linear infinite;
+}
+
+.tesseract-animation:hover {
+  filter: drop-shadow(0 0 10px rgba(110, 244, 165, 0.2));
+}
+
+@keyframes rotate {
+  from {
+    transform: rotateX(0) rotateY(0);
+  }
+  to {
+    transform: rotateX(360deg) rotateY(360deg);
+  }
+}
