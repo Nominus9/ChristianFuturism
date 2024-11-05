@@ -1,15 +1,39 @@
 /* style.css */
 body {
+  background: var(--color-black-space);
+  color: var(--color-white-pure);
+  font-family: var(--font-body);
   margin: 0;
-  padding: 0;
   min-height: 100vh;
-  overflow-y: auto;
-  background: transparent;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap');
+
+:root {
+  /* Colors */
+  --color-black-space: #000000;
+  --color-black-deep: #0A0A0A;
+  --color-black-text: #1a1a1a;
+  --color-green-matrix: #00ff41;
+  --color-green-accent: #6ef4a5;
+  --color-green-dim: rgba(0, 255, 65, 0.15);
+  --color-green-glow: rgba(110, 244, 165, 0.2);
+  --color-white-pure: #ffffff;
+  --color-white-ghost: rgba(255, 255, 255, 0.05);
+
+  /* Fonts */
+  --font-display: 'East Sea Dokdo', cursive;
+  --font-body: 'Inter', sans-serif;
+
+  /* Animations */
+  --transition-fast: 0.3s ease;
+  --transition-medium: 0.5s ease-out;
+  --transition-slow: 0.8s ease-in-out;
+}
 
 h1 {
   font-family: "Syncopate", sans-serif;
@@ -164,95 +188,6 @@ button {
     inset 0 0 20px rgba(0, 255, 0, 0.05);
 }
 
-/* Enhanced glitch animation */
-@keyframes glitch {
-  0% {
-    transform: translate(0);
-    opacity: 0.7;
-  }
-  1% {
-    transform: translate(-3px, 2px);
-    opacity: 0.8;
-  }
-  2% {
-    transform: translate(3px, -2px);
-    opacity: 0.9;
-  }
-  3% {
-    transform: translate(-3px, 1px);
-    opacity: 0.7;
-  }
-  4% {
-    transform: translate(0);
-    opacity: 0.7;
-  }
-  20% {
-    transform: translate(0);
-    opacity: 0.7;
-  }
-  21% {
-    transform: translate(4px, 1px);
-    opacity: 0.6;
-  }
-  22% {
-    transform: translate(-3px, -2px);
-    opacity: 0.8;
-  }
-  23% {
-    transform: translate(0);
-    opacity: 0.7;
-  }
-  100% {
-    transform: translate(0);
-    opacity: 0.7;
-  }
-}
-
-@keyframes scanline {
-  0% {
-    background-position: 0 0;
-  }
-  100% {
-    background-position: 0 100%;
-  }
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 0.8;
-  }
-  50% {
-    opacity: 0.4;
-  }
-}
-
-.group:hover .tech-pulse {
-  animation: pulse 2s infinite;
-}
-
-/* Ambient animations for cards */
-.builder-card {
-  animation: subtle-float 6s ease-in-out infinite;
-}
-
-.builder-card:nth-child(2n) {
-  animation-delay: 1s;
-}
-
-.builder-card:nth-child(3n) {
-  animation-delay: 2s;
-}
-
-@keyframes subtle-float {
-  0%,
-  100% {
-    transform: translateY(0) translateX(0);
-  }
-  50% {
-    transform: translateY(-5px) translateX(2px);
-  }
-}
 
 /* Manifesto styles */
 .manifesto-box {
@@ -538,4 +473,314 @@ const manifestoShader = {
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+/* Hero Section */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  background: var(--color-black-space);
+  overflow: hidden;
+}
+
+.space-background {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at center,
+    var(--color-black-deep) 0%,
+    var(--color-black-space) 100%
+  );
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.hero__image {
+  max-width: 90vw;
+  width: 1200px;
+  mix-blend-mode: screen;
+  filter: brightness(1.2) contrast(1.1);
+}
+
+.matrix-grid {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40vh;
+  background: 
+    linear-gradient(
+      to bottom,
+      transparent,
+      var(--color-green-dim)
+    ),
+    repeating-linear-gradient(
+      90deg,
+      var(--color-green-matrix) 0px,
+      var(--color-green-matrix) 1px,
+      transparent 1px,
+      transparent 30px
+    );
+  transform: perspective(1000px) rotateX(60deg);
+  opacity: 0.3;
+}
+
+.glow-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at center,
+    var(--color-green-glow) 0%,
+    transparent 70%
+  );
+  mix-blend-mode: screen;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* Clean, simplified animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+    filter: brightness(1);
+  }
+  50% {
+    transform: translateY(-10px);
+    filter: brightness(1.1);
+  }
+}
+
+@keyframes scan {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%) rotate(45deg);
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100%) rotate(45deg);
+  }
+}
+
+.floating {
+  animation: float 8s ease-in-out infinite;
+}
+
+.scanning::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    var(--color-green-glow),
+    transparent
+  );
+  animation: scan 8s linear infinite;
+}
+
+.landing-view {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Hero Section - Centered */
+.hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem;
+  text-align: center;
+}
+
+.hero__image {
+  max-width: 70vw; /* Smaller image */
+  width: 900px;
+  opacity: 0.9; /* Slightly translucent */
+  mix-blend-mode: screen;
+  filter: brightness(1.2) contrast(1.1);
+}
+
+/* Spaces Timeline - Bottom Strip */
+.spaces-timeline {
+  height: 180px; /* Fixed height for the strip */
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--color-black-deep) 20%
+  );
+  padding: 1rem 0;
+}
+
+.spaces-scroll {
+  height: 100%;
+  display: flex;
+  gap: 2rem;
+  padding: 0 2rem;
+  overflow-x: auto;
+  scrollbar-width: none; /* Hide scrollbar Firefox */
+}
+
+.spaces-scroll::-webkit-scrollbar {
+  display: none; /* Hide scrollbar Chrome */
+}
+
+/* Vision Box */
+.vision-box {
+  position: relative;
+  height: 60px; /* Initial height */
+  background: var(--color-black-deep);
+  border-top: 1px solid var(--color-green-dim);
+  transition: height 0.3s ease-out;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.vision-box__content {
+  padding: 1rem 2rem;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.vision-box:hover {
+  height: 80px;
+}
+
+.vision-box.expanded {
+  height: 300px;
+}
+
+.vision-box::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--color-green-dim) 90%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.vision-box:hover::after {
+  opacity: 0.1;
+}
+
+/* Hero Section Refinements */
+.hero {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3.5rem; /* Increased spacing between elements */
+  padding: 2rem;
+  text-align: center;
+  transform: translateY(-5vh); /* Slight upward shift */
+}
+
+.hero__title {
+  font-family: 'East Sea Dokdo';
+  font-size: 5rem;
+  color: var(--color-white-pure);
+  text-shadow: 0 0 20px var(--color-green-glow);
+  letter-spacing: 0.1em;
+}
+
+.hero__image {
+  max-width: 65vw;
+  width: 900px;
+  opacity: 0.85; /* More transparent */
+  mix-blend-mode: screen;
+  filter: brightness(1.2) contrast(1.1);
+}
+
+.hero__quote {
+  max-width: 800px;
+  font-style: italic;
+  color: var(--color-white-pure);
+  opacity: 0.8;
+  text-align: justify;
+  line-height: 1.6;
+  padding: 0 2rem;
+}
+
+.hero__quote cite {
+  display: block;
+  text-align: right;
+  margin-top: 1rem;
+  font-style: normal;
+  opacity: 0.7;
+}
+
+/* Enhanced background effects */
+.space-background {
+  position: fixed;
+  inset: 0;
+  background: 
+    radial-gradient(
+      circle at center,
+      var(--color-black-deep) 0%,
+      var(--color-black-space) 100%
+    ),
+    repeating-radial-gradient(
+      circle at center,
+      var(--color-green-dim) 0%,
+      transparent 100%
+    );
+  opacity: 0.3;
+  animation: pulse-background 8s ease-in-out infinite;
+}
+
+@keyframes pulse-background {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* Add rippling effect */
+.ripple-overlay {
+  position: fixed;
+  inset: 0;
+  background: 
+    repeating-linear-gradient(
+      0deg,
+      transparent 0%,
+      var(--color-green-dim) 50%,
+      transparent 100%
+    );
+  background-size: 200% 200%;
+  opacity: 0.1;
+  animation: ripple 15s linear infinite;
+}
+
+@keyframes ripple {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 0% 200%;
+  }
 }
