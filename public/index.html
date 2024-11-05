@@ -7,6 +7,10 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/tesseract.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <div class="landing-view">
@@ -17,48 +21,40 @@
       </div>
       <div class="ripple-overlay"></div>
 
-      <div class="hero">
+      <!-- Main Content Sections -->
+      <section id="hero" class="section hero">
         <h1 class="hero__title">Christian Futurism</h1>
         <img
           src="assets/image.jpg"
           alt="Christian Futurism"
           class="hero__image floating"
         />
-        <blockquote class="hero__quote">
-          "God bless thee, my son. I will give thee the greatest jewel I have...
-          The end of our foundation is the knowledge of causes, and secret
-          motions of things; and the enlarging of the bounds of human empire, to
-          the effecting of all things possible."
-          <cite>— Sir Francis Bacon, The New Atlantis</cite>
-        </blockquote>
-      </div>
-
-      <!-- Principles Sidebar -->
-      <aside class="principles-sidebar">
-        <div class="principles-content">
-          <h2 class="font-display">Principles</h2>
-          <div class="principles-list">
-            <!-- Principles will be populated via JS -->
-          </div>
+        <div class="hero__quote">
+          <p class="hero__quote-main">
+            "But they who wait for the Lord shall renew their strength; they
+            shall mount up with wings like eagles; they shall run and not be
+            weary; they shall walk and not faint."
+          </p>
+          <cite class="hero__quote-scripture">— Isaiah 40:31</cite>
         </div>
-      </aside>
-
-      <!-- Spaces Timeline -->
-      <div class="spaces-timeline">
-        <div class="spaces-scroll">
-          <!-- Spaces boxes will be populated via JS -->
-        </div>
-      </div>
+      </section>
     </div>
+
     <canvas id="glCanvas"></canvas>
     <script src="js/shader.js"></script>
     <script type="module" src="js/layout.js"></script>
     <script src="js/main.js"></script>
     <script type="module" src="js/tesseract.js"></script>
+    <script src="js/scroll-nav.js"></script>
     <div class="space-effects">
       <div class="nebula-layer nebula-1"></div>
       <div class="nebula-layer nebula-2"></div>
       <div class="nebula-layer nebula-3"></div>
+    </div>
+
+    <div class="section-nav">
+      <div class="section-nav__text">Vision</div>
+      <div class="section-nav__arrow">↓</div>
     </div>
   </body>
 </html>

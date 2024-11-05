@@ -7,25 +7,10 @@ document.addEventListener("DOMContentLoaded", () => {
   console.log("Main element created:", main);
 
   main.innerHTML = `
-    <!-- Massive pulsing hands background -->
-    <div class="fixed inset-0 pointer-events-none z-10"> <!-- Above shader, below content -->
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
-        w-[200vw] h-[200vh]">
-        <img 
-          src="/assets/hands.png"
-          class="w-full h-full object-cover animate-super-gentle-pulse filter brightness-150 contrast-150" 
-          style="opacity: 0.025"
-          alt="" 
-        />
-      </div>
-    </div>
 
-    <!-- Hero Section with Floating Text -->
+    <!-- Vision Section -->
     <section class="min-h-screen flex items-center justify-center mb-32 relative z-20">
       <div class="text-center parallax-container">
-        <h1 class="text-6xl md:text-7xl mb-6 text-black parallax-element font-bold tracking-wider" data-speed="0.5">
-          Christian Futurism
-        </h1>
         
         <div class="max-w-3xl mx-auto relative">
           <!-- Backdrop Tesseract -->
@@ -38,14 +23,17 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="absolute inset-0 bg-grid-pattern animate-grid-flow"></div>
             <div class="relative z-10">
               <p class="text-xl leading-relaxed mb-6 animate-text-glow">
-                An emerging movement bridging timeless faith with advancing technology
+                Vision
               </p>
               <ul class="space-y-4 text-left list-inside text-lg mb-6">
                 ${[
-                  "Embracing technological progress as a divine gift for kingdom advancement",
-                  "Integrating Christian ethics into artificial intelligence development",
-                  "Building decentralized communities rooted in biblical principles",
-                  "Fostering spiritual growth through innovative mediums",
+                  "I. Mankind has been given a dominion mandate that encompasses the whole of the cosmos",
+                  "II. Technology, rightly-ordered towards the flourishing of the Imago Dei, refracts the glory of God and does not obscure it",
+                  "III. Our duty to direct all of human life towards Christ is the other side of our technological duty to subdue and orient matter and the cosmos towards the flourishing of life;",
+                  "IV. This calling can only be fulfilled through, and is the necessary outworking of, the Kingdom established by Christ through his church;",
+                  "V. All Christians must reject the modern innovations of pietistic and quietistic eschatology, which de-emphasize the role and agency of the institutional church in the plan of salvation and re-creation;",
+                  "VI. Futurism is originally and inherently Christian. Optimistic futurism cannot sustain itself if unmoored from its Christian origins;",
+                  "VII. The ongoing unfolding of human history along broadly futurist and theistic lines is a prediction and a confirmation of the ultimate truth of Christianity.",
                 ]
                   .map(
                     (text, index) => `
@@ -66,17 +54,6 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
           </div>
 
-          <div class="bg-white/30 p-6 rounded-lg inline-flex items-center gap-4 parallax-element mt-8" data-speed="0.15">
-            <input 
-              type="email" 
-              placeholder="email@example.com" 
-              class="px-4 py-2 bg-white/50 rounded border border-black/10 text-lg"
-            >
-            <button class="px-4 py-2 bg-black/5 rounded hover:bg-black/10 text-lg tracking-wide">
-              Subscribe
-            </button>
-          </div>
-
           <!-- New Tesseract placement -->
           <div class="tesseract-container-center w-40 h-40 mx-auto mb-16 parallax-element" data-speed="0.1">
             ${createTesseractSVG()}
@@ -85,8 +62,6 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       </div>
 
-      <!-- Add fade overlay -->
-      <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-b from-transparent to-white pointer-events-none"></div>
     </section>
   
     <!-- Space Recordings Grid -->
@@ -214,57 +189,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 transform transition-all duration-500 scale-x-0
                 group-hover:scale-x-100"></div>
             </div>
-          </div>
-        `
-          )
-          .join("")}
-      </div>
-    </section>
-
-    <!-- Timeline -->
-    <section class="mb-32 relative">
-      <h3 class="text-3xl text-black font-light mb-16 text-center">
-        Journey of Faith & Technology
-      </h3>
-      <div class="max-w-4xl mx-auto relative">
-        <div class="absolute top-0 bottom-0 left-1/2 w-px bg-black/10"></div>
-        ${[
-          {
-            year: "1990s",
-            title: "Digital Ministry Begins",
-            desc: "First Christian websites and online communities emerge",
-          },
-          {
-            year: "2000s",
-            title: "Social Media Revolution",
-            desc: "Churches embrace social platforms for community building",
-          },
-          {
-            year: "2020s",
-            title: "AI & Faith Integration",
-            desc: "Exploring artificial intelligence through a Christian lens",
-          },
-          {
-            year: "Future",
-            title: "Metaverse Churches",
-            desc: "Virtual reality spaces for worship and fellowship",
-          },
-        ]
-          .map(
-            (item, index) => `
-          <div class="relative ${
-            index % 2 === 0 ? "text-right pr-12" : "text-left pl-12"
-          } mb-16 group">
-            <div class="absolute ${
-              index % 2 === 0 ? "right-0" : "left-0"
-            } top-0 w-8 h-8 transform -translate-y-3 
-              ${index % 2 === 0 ? "translate-x-4" : "-translate-x-4"}">
-              <div class="w-full h-full rounded-full bg-white/20 backdrop-blur-sm border border-black/10 
-                group-hover:border-green-400/50 transition-colors duration-300"></div>
-            </div>
-            <span class="text-sm text-black/60">${item.year}</span>
-            <h4 class="text-xl mb-2">${item.title}</h4>
-            <p class="text-black/70">${item.desc}</p>
           </div>
         `
           )
@@ -455,4 +379,6 @@ document.addEventListener("DOMContentLoaded", () => {
     </style>
   `
   );
+
+  const romanNumerals = ["I", "II", "III", "IV", "V", "VI", "VII"];
 });

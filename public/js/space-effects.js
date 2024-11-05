@@ -24,17 +24,18 @@ class ParticleSystem {
   }
 
   createParticles() {
-    const particleCount = 100; // Keep it subtle
+    const particleCount = 150; // Increased for visibility
 
     for (let i = 0; i < particleCount; i++) {
       this.particles.push({
         x: Math.random() * this.canvas.width,
         y: Math.random() * this.canvas.height,
-        size: Math.random() * 2 + 1,
-        speedX: Math.random() * 0.2 - 0.1,
-        speedY: Math.random() * 0.2 - 0.1,
+        size: Math.random() * 3 + 1, // Slightly larger
+        speedX: Math.random() * 0.3 - 0.15,
+        speedY: Math.random() * 0.3 - 0.15,
         life: 1,
         maxLife: Math.random() * 3 + 2,
+        opacity: Math.random() * 0.5 + 0.3, // More visible
       });
     }
   }
