@@ -479,18 +479,21 @@ const manifestoShader = {
 .hero {
   position: relative;
   min-height: 100vh;
-  background: var(--color-black-space);
+  background: transparent;
   overflow: hidden;
 }
 
 .space-background {
   position: absolute;
   inset: 0;
-  background: radial-gradient(
-    circle at center,
-    var(--color-black-deep) 0%,
-    var(--color-black-space) 100%
-  );
+  background: 
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.7),
+      rgba(0, 0, 0, 0.3)
+    ),
+    url('/path/to/deep-space.jpg') center/cover;
+  filter: contrast(1.1) brightness(0.8) hue-rotate(120deg);
 }
 
 .hero__content {
@@ -709,7 +712,7 @@ const manifestoShader = {
 .hero__image {
   max-width: 65vw;
   width: 900px;
-  opacity: 0.85; /* More transparent */
+  opacity: 0.5; /* More transparent */
   mix-blend-mode: screen;
   filter: brightness(1.2) contrast(1.1);
 }
@@ -737,21 +740,29 @@ const manifestoShader = {
   position: fixed;
   inset: 0;
   background: 
-    radial-gradient(
-      circle at center,
-      var(--color-black-deep) 0%,
-      var(--color-black-space) 100%
+    linear-gradient(
+      to bottom,
+      rgba(0,0,0,0.7),
+      rgba(0,0,0,0.3)
     ),
-    repeating-radial-gradient(
-      circle at center,
-      var(--color-green-dim) 0%,
-      transparent 100%
-    );
-  opacity: 0.3;
-  animation: pulse-background 8s ease-in-out infinite;
+    url('/path/to/space-image.jpg') center/cover;
+  filter: contrast(1.1) brightness(0.8);
 }
 
-@keyframes pulse-background {
+.space-overlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(
+    circle at center,
+    transparent,
+    var(--color-green-dim)
+  );
+  mix-blend-mode: overlay;
+  opacity: 0.3;
+  animation: space-pulse 10s ease-in-out infinite;
+}
+
+@keyframes space-pulse {
   0%, 100% {
     opacity: 0.3;
   }
@@ -783,4 +794,270 @@ const manifestoShader = {
   100% {
     background-position: 0% 200%;
   }
+}
+
+/* Enhanced space background */
+.space-background {
+  position: fixed;
+  inset: 0;
+  background: var(--color-black-space);
+  overflow: hidden;
+}
+
+.starfield {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(1px 1px at 25% 25%, var(--color-white-pure) 50%, transparent 100%),
+    radial-gradient(1px 1px at 50% 50%, var(--color-white-pure) 50%, transparent 100%),
+    radial-gradient(1px 1px at 75% 75%, var(--color-white-pure) 50%, transparent 100%),
+    radial-gradient(2px 2px at 15% 85%, var(--color-white-pure) 50%, transparent 100%);
+  background-size: 550px 550px;
+  opacity: 0.3;
+  animation: drift 60s linear infinite;
+}
+
+.data-streams {
+  position: absolute;
+  inset: 0;
+  opacity: 0.15;
+}
+
+@keyframes drift {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-550px);
+  }
+}
+
+/* Space background with nebula effect */
+.space-background {
+  position: fixed;
+  inset: 0;
+  background: 
+    linear-gradient(125deg, rgba(0,0,0,0.8) 0%, rgba(26,32,44,0.8) 100%),
+    radial-gradient(circle at 50% 50%, 
+      var(--color-green-dim) 0%, 
+      transparent 60%
+    ),
+    radial-gradient(circle at 85% 30%, 
+      rgba(110, 244, 165, 0.1) 0%, 
+      transparent 50%
+    ),
+    radial-gradient(circle at 15% 70%, 
+      rgba(110, 244, 165, 0.15) 0%, 
+      transparent 50%
+    ),
+    #000000;
+  filter: contrast(1.2);
+}
+
+.nebula-overlay {
+  position: fixed;
+  inset: 0;
+  background: 
+    url('path/to/noise-texture.png'), /* We can create this or use a subtle noise texture */
+    radial-gradient(
+      circle at center,
+      transparent 0%,
+      rgba(0, 255, 65, 0.03) 30%,
+      transparent 70%
+    );
+  mix-blend-mode: screen;
+  opacity: 0.4;
+  animation: nebula-pulse 8s ease-in-out infinite;
+}
+
+@keyframes nebula-pulse {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.05);
+  }
+}
+
+/* Stars effect */
+.stars {
+  position: fixed;
+  inset: 0;
+  background-image: 
+    radial-gradient(1px 1px at 10% 10%, white 1px, transparent 0),
+    radial-gradient(1px 1px at 20% 20%, white 1px, transparent 0),
+    radial-gradient(1px 1px at 30% 30%, white 1px, transparent 0),
+    radial-gradient(1px 1px at 40% 40%, white 1px, transparent 0),
+    radial-gradient(2px 2px at 50% 50%, white 1px, transparent 0),
+    radial-gradient(2px 2px at 60% 60%, white 1px, transparent 0),
+    radial-gradient(2px 2px at 70% 70%, white 1px, transparent 0),
+    radial-gradient(2px 2px at 80% 80%, white 1px, transparent 0),
+    radial-gradient(2px 2px at 90% 90%, white 1px, transparent 0);
+  background-size: 550px 550px;
+  opacity: 0.3;
+}
+
+/* Dynamic overlays */
+.space-effects {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+}
+
+.nebula-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    circle at 50% 50%,
+    var(--color-green-dim) 0%,
+    transparent 70%
+  );
+  mix-blend-mode: screen;
+  animation: nebula-pulse 15s ease-in-out infinite;
+}
+
+.star-field {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(1px 1px at 10% 10%, white 1px, transparent 0),
+    radial-gradient(1px 1px at 20% 20%, white 1px, transparent 0),
+    radial-gradient(2px 2px at 50% 50%, white 1px, transparent 0);
+  background-size: 550px 550px;
+  opacity: 0.8;
+  animation: drift 120s linear infinite;
+}
+
+/* New dynamic animations */
+@keyframes nebula-pulse {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes drift {
+  0% {
+    transform: translateY(0) rotate(0deg);
+  }
+  100% {
+    transform: translateY(-550px) rotate(3deg);
+  }
+}
+
+/* Base space setup */
+.space-background {
+  position: fixed;
+  inset: 0;
+  background: 
+    linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.8),
+      rgba(0, 0, 0, 0.4)
+    ),
+    url('/assets/space-bg.jpg') center/cover;
+  filter: contrast(1.1) brightness(0.8) hue-rotate(120deg);
+}
+
+/* Layered animation effects */
+.space-effects {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+}
+
+.nebula-layer {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  animation: nebula-drift 20s ease-in-out infinite;
+}
+
+.nebula-1 { animation-delay: 0s; }
+.nebula-2 { animation-delay: -7s; }
+.nebula-3 { animation-delay: -14s; }
+
+.shooting-star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  filter: drop-shadow(0 0 6px var(--color-green-accent));
+  opacity: 0;
+}
+
+/* Enhanced animations */
+@keyframes nebula-drift {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(1) translate(0, 0);
+  }
+  25% {
+    opacity: 0.3;
+    transform: scale(1.02) translate(1%, 1%);
+  }
+  75% {
+    opacity: 0.3;
+    transform: scale(1.02) translate(-1%, -1%);
+  }
+}
+
+@keyframes shooting-star {
+  0% {
+    opacity: 0;
+    transform: translateX(0) translateY(0);
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-100px) translateY(100px);
+  }
+}
+
+.space-background {
+  position: fixed;
+  inset: 0;
+  background: url('/assets/eagle-nebula.jpg') center/cover;
+  opacity: 0.4; /* Subtle transparency */
+}
+
+.particle-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+/* Rare shooting stars */
+@keyframes shooting-star {
+  0% {
+    transform: translateX(0) translateY(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-300px) translateY(300px);
+    opacity: 0;
+  }
+}
+
+.shooting-star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: var(--color-green-accent);
+  border-radius: 50%;
+  filter: drop-shadow(0 0 4px var(--color-green-accent));
+  opacity: 0;
 }
