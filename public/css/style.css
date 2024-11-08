@@ -520,7 +520,7 @@ const manifestoShader = {
   max-width: 90vw;
   width: 1200px;
   mix-blend-mode: screen;
-  filter: brightness(1.2) contrast(1.1);
+  filter: brightness(2) contrast(1.1);
 }
 
 .matrix-grid {
@@ -695,7 +695,7 @@ const manifestoShader = {
 }
 
 .vision-box:hover::after {
-  opacity: 0.1;
+  opacity: 0;
 }
 
 /* Hero Section Refinements */
@@ -711,38 +711,36 @@ const manifestoShader = {
   transform: translateY(-5vh);
 }
 
+.hero__image-container {
+  max-width: 50vw;
+  width: 700px;
+}
+
+.hero__image {
+  width: 100%;
+  opacity: 0.65;
+  mix-blend-mode: screen;
+  filter: brightness(1.2) contrast(1.1);
+}
+
+.hero__title-container {
+  text-align: center;
+  margin-top: 2rem;
+}
+
 .hero__title {
   font-family: 'East Sea Dokdo';
   font-size: 5rem;
   color: var(--color-white-pure);
   text-shadow: 0 0 20px var(--color-green-glow);
   letter-spacing: 0.1em;
+  opacity: 0.9;
 }
 
-.hero__image {
-  max-width: 50vw;
-  width: 700px;
-  opacity: 0.5;
-  mix-blend-mode: screen;
-  filter: brightness(1.2) contrast(1.1);
-}
-
-.hero__quote {
-  max-width: 800px;
-  font-style: italic;
-  color: var(--color-white-pure);
-  opacity: 0.8;
-  text-align: justify;
-  line-height: 1.6;
-  padding: 0 2rem;
-}
-
-.hero__quote cite {
-  display: block;
-  text-align: right;
+.hero__subtitle {
+  font-size: 1.2rem;
   margin-top: 1rem;
-  font-style: normal;
-  opacity: 0.7;
+  letter-spacing: 0.05em;
 }
 
 /* Enhanced background effects */
@@ -1252,4 +1250,62 @@ const manifestoShader = {
 .section:not(.hero).visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* Add these new styles */
+@keyframes wave-sweep {
+  0% {
+    transform: translateX(-100%) skewX(45deg);
+  }
+  100% {
+    transform: translateX(100%) skewX(45deg);
+  }
+}
+
+.section:not(.hero).visible::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(110, 244, 165, 0.1),
+    transparent
+  );
+  pointer-events: none;
+  animation: wave-sweep 1.5s ease-out forwards;
+}
+
+.section:not(.hero) {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Adjust the navbar to be more visible against the background */
+.backdrop-blur-sm {
+  backdrop-filter: blur(8px);
+}
+
+/* Add hover effects to nav links */
+.nav-link {
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--color-green-accent);
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover::after {
+  width: 100%;
 }

@@ -5,26 +5,29 @@ class ScrollHandler {
   }
 
   init() {
-    // Create intersection observer
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("visible");
-            console.log(`${entry.target.id} is now visible`); // Debug
+            setTimeout(() => {
+              entry.target.classList.add("animation-complete");
+            }, 1500);
+            console.log(`${entry.target.id} is now visible`);
+          } else if (entry.target.classList.contains("animation-complete")) {
+            entry.target.classList.remove("visible", "animation-complete");
           }
         });
       },
       {
-        threshold: 0.1, // Trigger earlier
-        rootMargin: "0px 0px -10% 0px", // Trigger slightly before section comes into view
+        threshold: 0.1,
+        rootMargin: "0px 0px -10% 0px",
       }
     );
 
-    // Observe all sections
     this.sections.forEach((section) => {
       observer.observe(section);
-      console.log(`Observing section: ${section.id}`); // Debug
+      console.log(`Observing section: ${section.id}`);
     });
   }
 }

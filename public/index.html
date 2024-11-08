@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Christian Futurism - Halo Effect</title>
+    <title>Christian Futurism</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/tesseract.css" />
@@ -13,6 +13,48 @@
     />
   </head>
   <body>
+    <nav
+      class="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-sm border-b border-white/10"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center">
+            <a
+              href="/"
+              class="text-white hover:text-green-400 transition-colors"
+            >
+              Christian Futurism
+            </a>
+          </div>
+          <div class="flex space-x-8">
+            <a href="/" class="text-white/70 hover:text-white transition-colors"
+              >Home</a
+            >
+            <a
+              href="/manifesto.html"
+              class="text-white/70 hover:text-white transition-colors"
+              >Manifesto</a
+            >
+            <a
+              href="#vision"
+              class="text-white/70 hover:text-white transition-colors"
+              >Vision</a
+            >
+            <a
+              href="#recordings"
+              class="text-white/70 hover:text-white transition-colors"
+              >Recordings</a
+            >
+            <a
+              href="#builders"
+              class="text-white/70 hover:text-white transition-colors"
+              >Builders</a
+            >
+          </div>
+        </div>
+      </div>
+    </nav>
+
     <div class="landing-view">
       <div class="space-background">
         <div class="stars"></div>
@@ -23,19 +65,22 @@
 
       <!-- Main Content Sections -->
       <section id="hero" class="section hero">
-        <h1 class="hero__title">Christian Futurism</h1>
-        <img
-          src="assets/image.jpg"
-          alt="Christian Futurism"
-          class="hero__image floating"
-        />
-        <div class="hero__quote">
-          <p class="hero__quote-main">
-            "But they who wait for the Lord shall renew their strength; they
-            shall mount up with wings like eagles; they shall run and not be
-            weary; they shall walk and not faint."
-          </p>
-          <cite class="hero__quote-scripture">— Isaiah 40:31</cite>
+        <div class="hero__image-container">
+          <img src="assets/image.jpg" alt="Hero Image" class="hero__image" />
+          <h1 class="hero__title">Christian Futurism</h1>
+        </div>
+          <div class="subscribe-box">
+            <form class="subscribe-form">
+              <input
+                type="email"
+                placeholder="Enter your email for updates"
+                class="subscribe-input"
+              />
+              <button type="submit" class="subscribe-button">Subscribe</button>
+            </form>
+          </div>
+
+
         </div>
       </section>
     </div>

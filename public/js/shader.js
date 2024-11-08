@@ -10,49 +10,50 @@ const fragmentShaderSource = `
             uniform float u_time;
             uniform vec2 u_resolution;
 
-            // Grid helper function
-            float grid(vec2 uv, float size) {
-                vec2 grid = fract(uv * size);
-                float gridLines = step(0.98, grid.x) + step(0.98, grid.y);
-                return gridLines * 0.3; // Subtle grid intensity
+            // Improved noise function for more organic movement
+            float noise(vec2 p) {
+                vec2 ip = floor(p);
+                vec2 u = fract(p);
+                u = u * u * (3.0 - 2.0 * u);
+                
+                float res = mix(
+                    mix(sin(dot(ip, vec2(12.9898,78.233))),
+                        sin(dot(ip + vec2(1.0,0.0), vec2(12.9898,78.233))), u.x),
+                    mix(sin(dot(ip + vec2(0.0,1.0), vec2(12.9898,78.233))),
+                        sin(dot(ip + vec2(1.0,1.0), vec2(12.9898,78.233))), u.x), u.y);
+                return 0.5 + 0.5 * res;
             }
 
-            // Wave function
-            float wave(vec2 uv, float time) {
-                // 30 second cycle
-                float slowTime = time * 0.033; 
-                float wave = sin(slowTime - (uv.x + uv.y) * 3.0) * 0.5 + 0.5;
-                return wave;
+            float grid(vec2 uv, float size) {
+                vec2 grid = fract(uv * size);
+                return (step(0.98, grid.x) + step(0.98, grid.y)) * 0.15;
             }
 
             void main() {
                 vec2 uv = gl_FragCoord.xy / u_resolution;
                 
-                // Isometric transformation
-                mat2 iso = mat2(
-                    1.0, 0.5,  // First column
-                    -1.0, 0.5   // Second column
-                ) * 1.5;
-                vec2 isoUv = uv * iso;
+                // Create multiple energy waves with different frequencies
+                float time = u_time * 0.2;
+                float energy1 = noise(uv * 3.0 + time * vec2(0.5, 0.7));
+                float energy2 = noise(uv * 2.0 - time * vec2(0.6, 0.3));
+                float energy3 = noise(uv * 4.0 + time * vec2(-0.3, 0.6));
                 
-                // Base green color (#6ef4a5)
-                vec3 baseColor = vec3(0.431, 0.957, 0.647);
+                // Combine energies for organic movement
+                float energyField = energy1 * 0.5 + energy2 * 0.3 + energy3 * 0.2;
                 
-                // Time-based flow
-                float time = u_time * 0.3;
-                float flow = sin(uv.x * 4.0 + time) * 0.5 + 
-                             cos(uv.y * 3.0 - time * 0.7) * 0.5;
+                // Create grid with energy influence
+                vec2 gridUv = uv * 20.0;
+                float gridPattern = grid(gridUv, 1.0);
                 
-                // Grid with wave effect
-                float gridWave = wave(isoUv, u_time);
-                float gridPattern = grid(isoUv, 20.0) * gridWave;
+                // Base color with subtle energy glow
+                vec3 baseColor = vec3(0.431, 0.957, 0.647); // #6ef4a5
+                float energyGlow = smoothstep(0.4, 0.6, energyField) * 0.3;
                 
-                // Combine effects
-                vec3 color = baseColor * (0.5 + 0.5 * sin(flow));
-                color += vec3(gridPattern) * baseColor; // Add grid to the glow
+                vec3 color = baseColor * (0.2 + energyGlow);
+                color += vec3(gridPattern) * baseColor * (0.7 + energyGlow);
                 
-                // Gentle opacity pulsing
-                float alpha = 0.3 + 0.1 * sin(time);
+                // Subtle opacity variation
+                float alpha = 0.2 + 0.1 * energyGlow;
                 
                 gl_FragColor = vec4(color, alpha);
             }

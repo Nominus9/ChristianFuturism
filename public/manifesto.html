@@ -12,9 +12,52 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
+    <nav
+      class="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-sm border-b border-white/10"
+    >
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <div class="flex items-center">
+            <a
+              href="/"
+              class="text-white hover:text-green-400 transition-colors"
+            >
+              Christian Futurism
+            </a>
+          </div>
+          <div class="flex space-x-8">
+            <a href="/" class="text-white/70 hover:text-white transition-colors"
+              >Home</a
+            >
+            <a
+              href="/manifesto.html"
+              class="text-white/70 hover:text-white transition-colors"
+              >Manifesto</a
+            >
+            <a
+              href="/#vision"
+              class="text-white/70 hover:text-white transition-colors"
+              >Vision</a
+            >
+            <a
+              href="/#recordings"
+              class="text-white/70 hover:text-white transition-colors"
+              >Recordings</a
+            >
+            <a
+              href="/builders.html"
+              class="text-white/70 hover:text-white transition-colors"
+              >Builders</a
+            >
+          </div>
+        </div>
+      </div>
+    </nav>
+
     <canvas id="glCanvas"></canvas>
     <main id="manifesto-content" class="page-fade-in"></main>
     <script src="js/shader.js"></script>
     <script src="js/manifesto.js"></script>
+    <script src="js/nav.js"></script>
   </body>
 </html>
