@@ -174,7 +174,7 @@ button {
 }
 
 .manifesto-link:hover {
-  color: rgba(0, 0, 0, 0.9);
+  color: rgba(223, 156, 23, 0.9);
   border-bottom-color: rgba(0, 255, 0, 0.4);
 }
 
@@ -1308,4 +1308,139 @@ const manifestoShader = {
 
 .nav-link:hover::after {
   width: 100%;
+}
+
+/* Quote styling */
+.manifesto-quote {
+  font-family: "Cinzel", serif;
+  font-size: 1.4rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+  letter-spacing: 0.02em;
+  margin: 2rem 0;
+  padding: 2rem;
+  border-left: 3px solid var(--color-green-accent);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Principle tablet styling */
+.principles-list {
+  margin: 3rem 0;
+  padding: 2rem;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+  border-radius: 4px;
+}
+
+.principle-item {
+  font-family: "Cinzel", serif;
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.85);
+  margin: 1.5rem 0;
+  padding: 0.5rem 0;
+  letter-spacing: 0.05em;
+}
+
+.principle-numeral {
+  font-size: 2rem;
+  color: var(--color-green-accent);
+  margin-right: 1.5rem;
+}
+
+/* Principle section styling */
+.principle-section {
+  margin: 4rem 0;
+}
+
+.principle-header {
+  font-family: "Cinzel", serif;
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-green-accent);
+  margin-bottom: 1rem;
+  opacity: 0.9;
+}
+
+.principle-statement {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 2.8rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--color-white-pure);
+  margin-bottom: 3rem;
+  letter-spacing: 0.02em;
+}
+
+.principle-content {
+  font-family: "Inter", sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.01em;
+  margin-top: 2rem;
+}
+
+.principle-statement::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 1px;
+  background: var(--color-green-accent);
+  margin-top: 2rem;
+  opacity: 0.6;
+}
+
+/* Legal document-style content */
+.principle-content {
+  counter-reset: section;
+}
+
+.content-section {
+  margin: 1rem 0;
+  padding-left: 2rem;
+  position: relative;
+}
+
+.content-section::before {
+  counter-increment: section;
+  content: counter(section, decimal) ".";
+  position: absolute;
+  left: 0;
+  color: var(--color-green-accent);
+}
+
+.subsection {
+  margin: 0.5rem 0;
+  padding-left: 2rem;
+  position: relative;
+}
+
+.subsection::before {
+  content: attr(data-label);
+  position: absolute;
+  left: 0;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Add these styles */
+.toc-item.active {
+  @apply text-white bg-white/5;
+  text-shadow: 0 0 10px rgba(110, 244, 165, 0.5);
+  box-shadow: 0 0 20px rgba(110, 244, 165, 0.1);
+}
+
+/* Mobile ToC animations */
+.mobile-toc-content {
+  transition: max-height 0.3s ease-out;
+}
+
+@media (max-width: 768px) {
+  .mobile-toc-content {
+    max-height: 0;
+    overflow: hidden;
+  }
+  
+  .mobile-toc-content.show {
+    max-height: 500px;
+  }
 }
