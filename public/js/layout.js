@@ -1,5 +1,58 @@
 import { createTesseractSVG } from "./tesseract.js";
 
+// Define our data
+const spaceRecordings = [
+  {
+    title: "e/acc x Christianity",
+    desc: "Exploring the intersection of divine creativity and artificial intelligence",
+    image: "assets/space-recordings/1.png",
+    link: "https://x.com/CConnorMahoney/status/1751376217964487075",
+    date: "2024-01-28",
+  },
+  {
+    title: "Christian Futurism Builders Space I",
+    desc: "Connecting Christian Builders to shape the future of technology",
+    image: "assets/space-recordings/2.png",
+    link: "https://x.com/CConnorMahoney/status/1757521521658994777",
+    date: "2024-02-12",
+  },
+  {
+    title: "Christian Futurism Builders Space II",
+    desc: "Building digital communities of faith",
+    image: "assets/space-recordings/3.png",
+    link: "https://x.com/CConnorMahoney/status/1771290951752814636",
+    date: "2024-03-23",
+  },
+  {
+    title: "Christian Builders Space - A vision of the Christian Future",
+    desc: "Christian Futurism Builders Space III",
+    image: "assets/space-recordings/builders-III.png",
+    link: "https://x.com/CConnorMahoney/status/1771290951752814636",
+    date: "2024-03-23",
+  },
+  {
+    title: "Decentralization x Christianity",
+    desc: "Distributing the church through decentralized technology",
+    image: "assets/space-recordings/4.png",
+    link: "https://x.com/CConnorMahoney/status/1798056171716444648",
+    date: "2024-02-11",
+  },
+  {
+    title: "AI x Christianity",
+    desc: "Discussing the theological implications of artificial minds",
+    image: "assets/space-recordings/5.png",
+    link: "https://x.com/CConnorMahoney/status/1822457036761645187",
+    date: "2024-08-20",
+  },
+  {
+    title: "AI Art x Christianity",
+    desc: "Exploring the intersection of divine creativity and artificial intelligence",
+    image: "assets/space-recordings/4.png",
+    link: "https://x.com/CConnorMahoney/status/1835151225706488146",
+    date: "2024-09-17",
+  },
+];
+
 document.addEventListener("DOMContentLoaded", () => {
   console.log("DOM Content Loaded");
 
@@ -64,61 +117,78 @@ document.addEventListener("DOMContentLoaded", () => {
 
     </section>
   
-    <!-- Space Recordings Grid -->
-    <section class="mb-32">
+    <!-- Space Recordings Scroll -->
+    <section class="mb-32 overflow-hidden relative">
       <h3 class="text-3xl text-black font-light mb-16 text-center">
         Links to Space Recordings
       </h3>
-      <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-        ${[
-          {
-            title: "AI Art × Christianity",
-            desc: "Exploring the intersection of divine creativity and artificial intelligence",
-            image:
-              "https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg",
-            link: "https://twitter.com/i/spaces/1zqJVPDXPMnKB",
-          },
-          {
-            title: "AI × Christianity",
-            desc: "Discussing the theological implications of artificial minds",
-            image:
-              "https://images.pexels.com/photos/2007647/pexels-photo-2007647.jpeg",
-            link: "https://twitter.com/i/spaces/1YqJDqDNkoXJV",
-          },
-          {
-            title: "Decentralized technology × Christianity",
-            desc: "Building digital communities of faith",
-            image:
-              "https://images.pexels.com/photos/373543/pexels-photo-373543.jpeg",
-            link: "https://twitter.com/i/spaces/1mrGmkjXPRwxy",
-          },
-        ]
-          .map(
-            (item) => `
-          <a href="${item.link}" target="_blank" rel="noopener noreferrer" 
-            class="aspect-square bg-white/20 rounded-lg overflow-hidden group relative
-              before:absolute before:inset-0 before:border-2 before:border-transparent before:z-20
-              before:transition-all before:duration-500
-              hover:before:border-white/30 hover:before:scale-95
-              after:absolute after:inset-0 after:border-2 after:border-transparent after:z-20
-              after:transition-all after:duration-500 after:delay-100
-              hover:after:border-white/20 hover:after:scale-90">
-            <img src="${item.image}" alt="${item.title}" 
-              class="absolute inset-0 w-full h-full object-cover transition-all duration-500 
-                group-hover:scale-110 group-hover:rotate-1">
-            <div class="w-full h-full p-6 flex flex-col justify-between relative z-10
-              backdrop-blur-sm transition-all duration-300
-              bg-black/30 group-hover:bg-black/50
-              before:absolute before:inset-0 before:bg-gradient-to-t before:from-black/60 before:to-transparent">
-              <h4 class="text-lg text-white relative z-10 transition-transform duration-300
-                group-hover:translate-x-2">${item.title}</h4>
-              <span class="text-white/80 text-sm relative z-10 transition-all duration-300
-                group-hover:text-white group-hover:translate-x-2">${item.desc}</span>
-            </div>
-          </a>
-        `
-          )
-          .join("")}
+
+      <!-- Arrow Navigation -->
+      <button 
+        class="hidden md:flex items-center justify-center absolute left-4 top-1/2 transform -translate-y-1/2 z-10 
+        w-12 h-12 rounded-full bg-black/5 hover:bg-black/10 backdrop-blur-sm
+        border border-white/10 hover:border-white/20 transition-all duration-300 group" 
+        id="scroll-left">
+        <span class="transform transition-transform duration-300 group-hover:-translate-x-1">←</span>
+        <!-- Mini tesseract decoration -->
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-300">
+          ${createTesseractSVG()}
+        </div>
+      </button>
+      
+      <button 
+        class="hidden md:flex items-center justify-center absolute right-4 top-1/2 transform -translate-y-1/2 z-10 
+        w-12 h-12 rounded-full bg-black/5 hover:bg-black/10 backdrop-blur-sm
+        border border-white/10 hover:border-white/20 transition-all duration-300 group" 
+        id="scroll-right">
+        <span class="transform transition-transform duration-300 group-hover:translate-x-1">→</span>
+        <!-- Mini tesseract decoration -->
+        <div class="absolute inset-0 opacity-0 group-hover:opacity-30 transition-opacity duration-300">
+          ${createTesseractSVG()}
+        </div>
+      </button>
+
+      <!-- Scrolling Container -->
+      <div class="relative max-w-6xl mx-auto">
+        <div class="flex overflow-x-auto snap-x snap-mandatory scrollbar-hide space-x-6 pb-4 px-4"
+             id="recordings-container">
+          ${spaceRecordings
+            .map(
+              (recording) => `
+              <div class="flex-none w-80 snap-center">
+                <a href="${recording.link}" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="block bg-white/5 rounded-lg overflow-hidden group relative
+                   hover:bg-white/10 transition-all duration-300">
+                  <img src="${recording.image}" 
+                       alt="${recording.title}" 
+                       class="w-full h-48 object-cover"/>
+                  <div class="p-6">
+                    <h4 class="text-lg font-medium mb-2 group-hover:text-green-400 transition-colors">
+                      ${recording.title}
+                    </h4>
+                    <p class="text-sm text-white/70">${recording.desc}</p>
+                    <span class="text-xs text-white/50 mt-4 block">${
+                      recording.date
+                    }</span>
+                  </div>
+                  
+                  <!-- Card decoration -->
+                  <div class="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300">
+                    ${createTesseractSVG()}
+                  </div>
+                </a>
+              </div>
+            `
+            )
+            .join("")}
+        </div>
+
+        <!-- Scroll Progress Indicator -->
+        <div class="hidden md:block h-1 bg-white/10 mt-6 mx-4 rounded-full overflow-hidden">
+          <div class="h-full bg-green-400/30 rounded-full transition-all duration-300" id="scroll-progress"></div>
+        </div>
       </div>
     </section>
   
@@ -130,34 +200,29 @@ document.addEventListener("DOMContentLoaded", () => {
       <div class="grid md:grid-cols-5 gap-8 max-w-6xl mx-auto">
         ${[
           {
-            title: "Sermon AI",
+            title: "SeraphAI",
             desc: "Neural networks trained on centuries of Christian wisdom",
-            image:
-              "https://images.pexels.com/photos/8386434/pexels-photo-8386434.jpeg",
+            image: "assets/builders/seraph-ai.jpeg",
           },
           {
-            title: "Craft Interface",
-            desc: "Building beautiful tools for digital ministry",
-            image:
-              "https://images.pexels.com/photos/1089438/pexels-photo-1089438.jpeg",
+            title: "Pulpit AI",
+            desc: "Helping busy pastors turn sermons into content; AI for everything after you preach",
+            image: "assets/builders/pulpit.png",
           },
           {
-            title: "Value Atomics",
-            desc: "Encoding Christian values into digital systems",
-            image:
-              "https://images.pexels.com/photos/2582937/pexels-photo-2582937.jpeg",
+            title: "Ecclesia Bible App",
+            desc: "The AI-enhanced Bible App",
+            image: "assets/builders/ecclesia.jpeg",
           },
           {
-            title: "Faith Labs",
-            desc: "Experimental approaches to digital worship",
-            image:
-              "https://images.pexels.com/photos/924824/pexels-photo-924824.jpeg",
+            title: "Codex Translation Editor",
+            desc: "Empowering Translators with Cutting-Edge AI",
+            image: "assets/builders/codex-logo.png",
           },
           {
-            title: "Divine Data",
-            desc: "Analyzing patterns in spiritual growth",
-            image:
-              "https://images.pexels.com/photos/669996/pexels-photo-669996.jpeg",
+            title: "Nominus9",
+            desc: "Catholic anon who made this website. @nominus9 on X",
+            image: "assets/builders/nominus9.png",
           },
         ]
           .map(
@@ -381,4 +446,36 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   const romanNumerals = ["I", "II", "III", "IV", "V", "VI", "VII"];
+
+  // Add scroll behavior right here
+  const container = document.getElementById("recordings-container");
+  const leftBtn = document.getElementById("scroll-left");
+  const rightBtn = document.getElementById("scroll-right");
+  const progressBar = document.getElementById("scroll-progress");
+
+  if (container && leftBtn && rightBtn && progressBar) {
+    // Update progress bar
+    const updateProgress = () => {
+      const progress =
+        (container.scrollLeft /
+          (container.scrollWidth - container.clientWidth)) *
+        100;
+      progressBar.style.width = `${progress}%`;
+    };
+
+    // Scroll handlers
+    leftBtn.addEventListener("click", () => {
+      container.scrollBy({ left: -320, behavior: "smooth" });
+    });
+
+    rightBtn.addEventListener("click", () => {
+      container.scrollBy({ left: 320, behavior: "smooth" });
+    });
+
+    // Update progress on scroll
+    container.addEventListener("scroll", updateProgress);
+
+    // Initial progress update
+    updateProgress();
+  }
 });
