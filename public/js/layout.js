@@ -261,37 +261,6 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     </section>
 
-    <!-- Community -->
-    <section class="mb-32 relative overflow-hidden">
-      <div class="max-w-4xl mx-auto text-center relative z-10">
-        <h3 class="text-3xl text-black font-light mb-8">Join Our Community</h3>
-        <p class="text-xl mb-12 text-black/70">Stay updated with the latest in Christian Futurism</p>
-        <div class="flex gap-4 justify-center">
-          <input 
-            type="email" 
-            placeholder="Enter your email" 
-            class="px-6 py-3 rounded-lg bg-white/20 backdrop-blur-sm border border-black/10 w-full max-w-sm
-            focus:outline-none focus:border-green-400/50 transition-colors duration-300"
-          >
-          <button class="px-6 py-3 rounded-lg bg-black/5 hover:bg-black/10 transition-colors duration-300">
-            Subscribe
-          </button>
-        </div>
-        <div class="mt-8 flex justify-center gap-8">
-          <div class="text-center">
-            <div class="text-2xl font-bold">2.5K+</div>
-            <div class="text-black/60">Community Members</div>
-          </div>
-          <div class="text-center">
-            <div class="text-2xl font-bold">150+</div>
-            <div class="text-black/60">Weekly Discussions</div>
-          </div>
-          <div class="text-center">
-            <div class="text-2xl font-bold">45+</div>
-            <div class="text-black/60">Active Projects</div>
-          </div>
-        </div>
-      </div>
       <!-- Decorative background -->
       <div class="absolute inset-0 opacity-30">
         <div class="absolute inset-0 bg-gradient-to-r from-green-400/10 to-blue-400/10"></div>

@@ -35,4 +35,22 @@ class ScrollHandler {
 // Initialize on load
 document.addEventListener("DOMContentLoaded", () => {
   new ScrollHandler();
+
+  const hero = document.querySelector(".hero");
+  const imageContainer = document.querySelector(".hero__image-container");
+  const title = document.querySelector(".hero__title");
+
+  window.addEventListener("scroll", () => {
+    const scroll = window.scrollY;
+    const viewportHeight = window.innerHeight;
+    const scrollProgress = scroll / viewportHeight;
+
+    if (scrollProgress < 1) {
+      imageContainer.style.transform = `translateY(-${scroll * 0.2}px) scale(${
+        1 - scrollProgress * 0.1
+      })`;
+      title.style.transform = `translateY(-${scroll * 0.1}px)`;
+      hero.style.opacity = 1 - scrollProgress;
+    }
+  });
 });
