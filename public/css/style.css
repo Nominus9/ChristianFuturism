@@ -7,6 +7,14 @@ body {
   min-height: 100vh;
 }
 
+@font-face {
+  font-family: 'Bodoni Rough C';
+  src: url('/public/fonts/BodoniRoughC.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&display=swap");
@@ -481,16 +489,75 @@ const manifestoShader = {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 2.5rem;
   padding: 2rem;
   height: 65vh;
-  margin: 10vh 0;
+  margin-top: 2vh;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: var(--color-black-space);
+}
+
+.hero__image-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 90vw;
+  width: 950px;
 }
 
 .hero__image {
-  max-width: 45vw;
-  width: 600px;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  margin: 0 auto;
+}
+
+.hero__title {
+  position: relative;
+  text-align: center;
+  margin: 1rem 0;
+  font-family: "Bodoni Rough C", "Bodoni MT", "Bodoni", serif;
+  font-size: 4rem;
+  color: var(--color-white-pure);
+  text-shadow: 0 0 40px var(--color-green-glow);
+  letter-spacing: 0.1em;
+}
+
+.hero__quote {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  max-width: 800px;
+  opacity: 1;
+}
+
+.hero__quote-main {
+  font-family: 'East Sea Dokdo', cursive;
+  font-size: 2.8rem;
+  line-height: 1.3;
+  color: var(--color-white-pure);
+  max-width: 800px;
+  text-align: center;
+}
+
+.hero__quote-scripture {
+  font-family: 'East Sea Dokdo', cursive;
+  font-size: 2rem;
+  color: var(--color-green-accent);
+  opacity: 1;
+  display: block;
+  text-align: right;
+  margin-top: 1rem;
 }
 
 .space-background {
@@ -504,23 +571,6 @@ const manifestoShader = {
     ),
     url('/path/to/deep-space.jpg') center/cover;
   filter: contrast(1.1) brightness(0.8) hue-rotate(120deg);
-}
-
-.hero__content {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-}
-
-.hero__image {
-  max-width: 90vw;
-  width: 1200px;
-  mix-blend-mode: screen;
-  filter: brightness(2) contrast(1.1);
 }
 
 .matrix-grid {
@@ -621,14 +671,6 @@ const manifestoShader = {
   text-align: center;
 }
 
-.hero__image {
-  max-width: 70vw; /* Smaller image */
-  width: 900px;
-  opacity: 0.9; /* Slightly translucent */
-  mix-blend-mode: screen;
-  filter: brightness(1.2) contrast(1.1);
-}
-
 /* Spaces Timeline - Bottom Strip */
 .spaces-timeline {
   height: 180px; /* Fixed height for the strip */
@@ -712,29 +754,15 @@ const manifestoShader = {
 }
 
 .hero__image-container {
-  max-width: 50vw;
-  width: 700px;
+  max-width: 200vw;
+  width: 1200px;
+  align-items: center;
 }
 
-.hero__image {
-  width: 100%;
-  opacity: 0.65;
-  mix-blend-mode: screen;
-  filter: brightness(1.2) contrast(1.1);
-}
 
 .hero__title-container {
   text-align: center;
   margin-top: 2rem;
-}
-
-.hero__title {
-  font-family: 'East Sea Dokdo';
-  font-size: 5rem;
-  color: var(--color-white-pure);
-  text-shadow: 0 0 20px var(--color-green-glow);
-  letter-spacing: 0.1em;
-  opacity: 0.9;
 }
 
 .hero__subtitle {
@@ -844,22 +872,29 @@ const manifestoShader = {
 .space-background {
   position: fixed;
   inset: 0;
-  background: 
-    linear-gradient(125deg, rgba(0,0,0,0.8) 0%, rgba(26,32,44,0.8) 100%),
-    radial-gradient(circle at 50% 50%, 
-      var(--color-green-dim) 0%, 
-      transparent 60%
-    ),
-    radial-gradient(circle at 85% 30%, 
-      rgba(110, 244, 165, 0.1) 0%, 
-      transparent 50%
-    ),
-    radial-gradient(circle at 15% 70%, 
-      rgba(110, 244, 165, 0.15) 0%, 
-      transparent 50%
-    ),
-    #000000;
+  background: linear-gradient(
+    125deg, 
+    rgba(0,0,0,0.8) 0%, 
+    rgba(26,32,44,0.8) 100%
+  ),
+  radial-gradient(
+    circle at 50% 50%, 
+    var(--color-green-dim) 0%, 
+    transparent 60%
+  ),
+  radial-gradient(
+    circle at 85% 30%, 
+    rgba(110, 244, 165, 0.1) 0%, 
+    transparent 50%
+  ),
+  radial-gradient(
+    circle at 15% 70%, 
+    rgba(110, 244, 165, 0.15) 0%, 
+    transparent 50%
+  ),
+  #000000;
   filter: contrast(1.2);
+  z-index: -1;
 }
 
 .nebula-overlay {
@@ -1034,7 +1069,7 @@ const manifestoShader = {
 .space-background {
   position: fixed;
   inset: 0;
-  background: url('/assets/eagle-nebula.jpg') center/cover;
+  background: url('/assets/space-background.png') center/cover;
   opacity: 0.8;
   mask-image: radial-gradient(circle at center, 
     black 0%, 
@@ -1086,19 +1121,26 @@ const manifestoShader = {
   flex-direction: column;
   gap: 1.5rem;
   max-width: 800px;
-  opacity: 0.9;
+  opacity: 1;
 }
 
 .hero__quote-main {
-  font-family: var(--font-display);
-  font-size: 1.8rem;
+  font-family: 'East Sea Dokdo', cursive;
+  font-size: 2.8rem;
+  line-height: 1.3;
   color: var(--color-white-pure);
+  max-width: 800px;
+  text-align: center;
 }
 
 .hero__quote-scripture {
-  font-style: italic;
+  font-family: 'East Sea Dokdo', cursive;
+  font-size: 2rem;
   color: var(--color-green-accent);
-  opacity: 0.8;
+  opacity: 1;
+  display: block;
+  text-align: right;
+  margin-top: 1rem;
 }
 
 /* Quote styling with new font */
@@ -1454,4 +1496,22 @@ const manifestoShader = {
 .scrollbar-hide {
   -ms-overflow-style: none;  /* IE and Edge */
   scrollbar-width: none;  /* Firefox */
+}
+
+.hero__quote {
+  position: relative;
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 2rem;
+  color: rgba(255, 255, 255, 0.8);
+  font-style: italic;
+  line-height: 1.6;
+  padding: 0 1rem;
+}
+
+.hero__subscribe-container {
+  position: relative;
+  max-width: 440px;
+  margin: 0 auto;
+  width: 100%;
 }
