@@ -9,10 +9,10 @@ body {
 
 @font-face {
   font-family: 'Bodoni Rough C';
-  src: url('/public/fonts/BodoniRoughC.ttf') format('truetype');
+  src: url('/fonts/BodoniRoughC.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
-  font-display: swap;
+  font-display: block;
 }
 
 @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap");
@@ -196,19 +196,6 @@ button {
     inset 0 0 20px rgba(0, 255, 0, 0.05);
 }
 
-
-/* Manifesto styles */
-.manifesto-box {
-  position: relative;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 8px;
-  padding: 2rem;
-  text-align: justify;
-  overflow: hidden;
-  border: 1px solid rgba(0, 255, 0, 0.1);
-  box-shadow: 0 0 20px rgba(0, 255, 0, 0.05);
-}
 
 .bg-grid-pattern {
   background-image: linear-gradient(rgba(0, 255, 0, 0.03) 1px, transparent 1px),
@@ -485,26 +472,66 @@ const manifestoShader = {
 
 /* Hero Section */
 .hero {
-  min-height: 100vh;
+  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 15vh; /* Start content higher up */
+  justify-content: center;
+  gap: 2rem;
+  padding: 2rem;
+  min-height: 100vh;
   position: relative;
   overflow: hidden;
+  transform: translateY(-5vh);
+  transition: transform 0.3s ease-out;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    height: auto;
+    padding-top: 4vh;
+    transform: none;
+  }
 }
 
 .hero__image-container {
-  width: 850px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(90vw, 850px);  /* Responsive but capped */
   transform: translateY(-2rem);
   transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.hero__image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 4px;
+  opacity: 0.9;
+}
+
 .hero__title {
-  font-size: clamp(2rem, 8vw, 4.5rem); /* Responsive sizing */
-  transform: translateY(-1rem);
+  font-family: "Bodoni Rough C", sans-serif;  /* From our root font styles */
+  font-size: clamp(2rem, 8vw, 4.5rem);   /* Responsive sizing */
+  color: whitesmoke;
+  text-shadow: 0 0 40px var(--color-green-glow);
+  letter-spacing: 0.25em;
+  white-space: nowrap;
+  text-align: center;
   opacity: 0;
   animation: fadeInUp 0.8s forwards 0.2s;
+  transform: translateY(-1rem);
+  transition: all var(--transition-medium);  /* Using our CSS variable */
+}
+
+@media (max-width: 768px) {
+  .hero__title {
+    white-space: normal;
+    letter-spacing: 0.15em;
+    line-height: 1.2;
+  }
 }
 
 .hero__quote {
@@ -629,17 +656,6 @@ const manifestoShader = {
   justify-content: space-between;
 }
 
-/* Hero Section - Centered */
-.hero {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 2rem;
-  padding: 2rem;
-  text-align: center;
-}
 
 /* Spaces Timeline - Bottom Strip */
 .spaces-timeline {
@@ -708,25 +724,6 @@ const manifestoShader = {
 
 .vision-box:hover::after {
   opacity: 0;
-}
-
-/* Hero Section Refinements */
-.hero {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 3rem;
-  padding: 2rem;
-  height: 75vh;
-  transform: translateY(-5vh);
-}
-
-.hero__image-container {
-  max-width: 200vw;
-  width: 1200px;
-  align-items: center;
 }
 
 
@@ -1232,12 +1229,6 @@ const manifestoShader = {
   transform: none; /* Reset transform */
 }
 
-.hero {
-  height: 65vh;
-  margin: 8vh 0;
-  gap: 1.5rem;
-  opacity: 1; /* Ensure hero is visible */
-}
 
 @media (max-width: 768px) {
   .section {
@@ -1246,10 +1237,6 @@ const manifestoShader = {
     margin-bottom: 1rem;
   }
   
-  .hero {
-    height: auto;
-    margin: 4vh 0;
-  }
 }
 
 /* Section transitions */
@@ -1333,78 +1320,6 @@ const manifestoShader = {
   padding: 2rem;
   border-left: 3px solid var(--color-green-accent);
   background: rgba(0, 0, 0, 0.2);
-}
-
-/* Principle tablet styling */
-.principles-list {
-  margin: 3rem 0;
-  padding: 2rem;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
-  border-radius: 4px;
-}
-
-.principle-item {
-  font-family: "Cinzel", serif;
-  font-size: 2rem;
-  color: rgba(255, 255, 255, 0.85);
-  margin: 1.5rem 0;
-  padding: 0.5rem 0;
-  letter-spacing: 0.05em;
-}
-
-.principle-numeral {
-  font-size: 2rem;
-  color: var(--color-green-accent);
-  margin-right: 1.5rem;
-}
-
-/* Principle section styling */
-.principle-section {
-  margin: 4rem 0;
-}
-
-.principle-header {
-  font-family: "Cinzel", serif;
-  font-size: 1.2rem;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  color: var(--color-green-accent);
-  margin-bottom: 1rem;
-  opacity: 0.9;
-}
-
-.principle-statement {
-  font-family: "Cormorant Garamond", serif;
-  font-size: 2.8rem;
-  font-weight: 500;
-  line-height: 1.4;
-  color: var(--color-white-pure);
-  margin-bottom: 3rem;
-  letter-spacing: 0.02em;
-}
-
-.principle-content {
-  font-family: "Inter", sans-serif;
-  font-size: 1.1rem;
-  line-height: 1.8;
-  color: rgba(255, 255, 255, 0.9);
-  letter-spacing: 0.01em;
-  margin-top: 2rem;
-}
-
-.principle-statement::after {
-  content: '';
-  display: block;
-  width: 60px;
-  height: 1px;
-  background: var(--color-green-accent);
-  margin-top: 2rem;
-  opacity: 0.6;
-}
-
-/* Legal document-style content */
-.principle-content {
-  counter-reset: section;
 }
 
 .content-section {
@@ -1510,4 +1425,10 @@ const manifestoShader = {
   border-color: rgba(110, 244, 165, 0.5);
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(110, 244, 165, 0.2);
+}
+
+
+.hero__title {
+  font-family: 'Bodoni Rough C', serif !important;
+  color: whitesmoke !important; /* Just to verify our selector is working */
 }

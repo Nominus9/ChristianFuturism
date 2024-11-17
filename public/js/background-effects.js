@@ -8,51 +8,53 @@ class DataStream {
 
   init() {
     this.resize();
-    window.addEventListener("resize", () => this.resize());
     this.createStreams();
     this.animate();
+    window.addEventListener("resize", () => this.resize());
+  }
+
+  createStreams() {
+    const streamCount = Math.floor(this.canvas.width / 20);
+    for (let i = 0; i < streamCount; i++) {
+      this.streams.push({
+        x: i * 20,
+        y: Math.random() * this.canvas.height,
+        speed: 1 + Math.random() * 3,
+        characters: this.generateCharacters(),
+      });
+    }
+  }
+
+  generateCharacters() {
+    // Mix of Matrix-style characters and Christian symbols
+    return "⟁⟰⟱✝†⚔️☨".split("");
+  }
+
+  animate() {
+    this.ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+    this.streams.forEach((stream) => {
+      this.ctx.fillStyle = "rgba(110, 244, 165, 0.8)";
+      this.ctx.font = "12px monospace";
+      this.ctx.fillText(
+        stream.characters[Math.floor(Math.random() * stream.characters.length)],
+        stream.x,
+        stream.y
+      );
+
+      stream.y += stream.speed;
+      if (stream.y > this.canvas.height) {
+        stream.y = 0;
+      }
+    });
+
+    requestAnimationFrame(() => this.animate());
   }
 
   resize() {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
-  }
-
-  createStreams() {
-    const numberOfStreams = Math.floor(this.canvas.width / 30);
-
-    for (let i = 0; i < numberOfStreams; i++) {
-      this.streams.push({
-        x: Math.random() * this.canvas.width,
-        y: Math.random() * this.canvas.height,
-        length: Math.random() * 150 + 50,
-        speed: Math.random() * 2 + 1,
-        width: Math.random() * 2 + 0.5,
-        opacity: Math.random() * 0.5 + 0.1,
-      });
-    }
-  }
-
-  animate() {
-    this.ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
-    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-
-    this.streams.forEach((stream) => {
-      this.ctx.beginPath();
-      this.ctx.strokeStyle = `rgba(110, 244, 165, ${stream.opacity})`;
-      this.ctx.lineWidth = stream.width;
-      this.ctx.moveTo(stream.x, stream.y);
-      this.ctx.lineTo(stream.x, stream.y - stream.length);
-      this.ctx.stroke();
-
-      stream.y += stream.speed;
-      if (stream.y > this.canvas.height + stream.length) {
-        stream.y = -stream.length;
-        stream.x = Math.random() * this.canvas.width;
-      }
-    });
-
-    requestAnimationFrame(() => this.animate());
   }
 }
 
@@ -61,4 +63,13 @@ document.addEventListener("DOMContentLoaded", () => {
   canvas.classList.add("data-streams");
   document.querySelector(".space-background").appendChild(canvas);
   new DataStream(canvas);
+});
+
+document.fonts.ready.then(() => {
+  console.log(
+    "Fonts loaded:",
+    Array.from(document.fonts)
+      .map((font) => `${font.family} - ${font.status}`)
+      .join("\n")
+  );
 });
